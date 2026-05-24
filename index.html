@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png">
+<link rel="icon" type="image/png" href="garena-logo.png">
 <title>BugPulse</title>
 <meta name="theme-color" content="#06060f">
-<link rel="preload" href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png" as="image">
+<link rel="preload" href="garena-logo.png" as="image">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -141,7 +141,7 @@ body.clicking #cur-bat{transform:translate(-50%,-50%) rotate(10deg)}
   position:fixed;inset:0;z-index:9999;background:var(--bg);
   display:none;align-items:center;justify-content:center;padding:20px;
 }
-.login-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.35}
+.login-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.45;background-size:cover;background-position:center;}
 .login-bg-overlay{position:absolute;inset:0;z-index:1;
   background:linear-gradient(135deg,rgba(6,6,15,.92),rgba(124,58,237,.12),rgba(6,6,15,.88))}
 .lc{
@@ -1000,7 +1000,7 @@ textarea.fi2, input.fi2 { color: var(--text) !important; }
   <div class="load-logo-wrap">
     <div class="load-logo-ring">
       <div class="load-inner">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png"
+        <img src="garena-logo.png"
           style="width:36px;height:36px;object-fit:contain;animation:spin-ring 2s linear infinite reverse"
           onerror="this.outerHTML='&#127951;'">
       </div>
@@ -1017,13 +1017,11 @@ textarea.fi2, input.fi2 { color: var(--text) !important; }
 <script>setTimeout(function(){var ls=document.getElementById('loadScreen');var sm=document.getElementById('loadStuckMsg');if(ls&&ls.style.display!=='none'&&!ls.classList.contains('fade')&&sm)sm.style.display='block';},6000);</script>
 
 <div id="loginScreen">
-  <video class="login-bg-video" autoplay muted loop playsinline>
-    <source src="https://official.garena.com/sg/v1/config/banner_ff.jpg" type="video/mp4">
-  </video>
+  <div class="login-bg-video" style="background-image:url('https://official.garena.com/sg/v1/config/banner_ff.jpg');background-size:cover;background-position:center;"></div>
   <div class="login-bg-overlay"></div>
   <div class="lc">
     <div class="lc-logo">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png" alt="Garena" onerror="this.style.display='none';this.parentElement.innerHTML='🎮'">
+      <img src="garena-logo.png" alt="Garena" style="width:140px;height:auto" onerror="this.style.display='none'">
     </div>
     <div class="lc-title">BugPulse</div>
     <div class="lc-sub">Garena &#183; Bug Management</div>
@@ -1037,7 +1035,7 @@ textarea.fi2, input.fi2 { color: var(--text) !important; }
       </svg>
       Sign in with Google
     </button>
-    <div class="lc-note">Restricted to <b>@garena.com</b> accounts only</div>
+    <div class="lc-note">Sign in with your Google account</div>
     <div class="lc-footer">Built by <b>Kunal Jade</b> &#183; QA Engineer &#183; Garena</div>
     <div class="lc-err" id="loginErr"></div>
   </div>
@@ -1101,10 +1099,10 @@ textarea.fi2, input.fi2 { color: var(--text) !important; }
 <div id="app" style="display:none">
   <div class="topbar">
     <div class="tb-brand" onclick="goTab('home')" title="Home" onclick="goTab('home')" id="topBrand">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png" alt="Garena"
+      <img src="garena-logo.png" alt="Garena"
         class="tb-logo-full"
         loading="eager"
-        onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png';this.style.display='none';this.insertAdjacentHTML('afterend','<span class=\'tb-name\'>BugPulse</span>')">
+        onerror="this.onerror=null;this.src='garena-logo.png';this.style.display='none';this.insertAdjacentHTML('afterend','<span class=\'tb-name\'>BugPulse</span>')">
     </div>
     <div class="tb-tabs">
       <div class="tb-tab on" id="tt-home" data-small-hide onclick="goTab('home')">&#127968; Home</div>
@@ -1806,7 +1804,7 @@ async function requestPushPermission() {
         await api('/push/notify', 'POST', {
           title: 'BugPulse',
           body: 'Notifications active — you will be alerted on new bugs and builds.',
-          icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png',
+          icon: 'garena-logo.png',
           tag: 'test',
         });
       } catch(e) {}
@@ -1893,8 +1891,8 @@ function sendDesktopNotification(title, body, bugId) {
   if (_swRegistration) {
     _swRegistration.showNotification(title, {
       body,
-      icon:  'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png',
-      badge: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png',
+      icon:  'garena-logo.png',
+      badge: 'garena-logo.png',
       tag:   bugId || 'bugpulse',
       data:  { bugId, url: bugId ? APP_URL + '?bug=' + bugId : APP_URL },
     });
@@ -1903,7 +1901,7 @@ function sendDesktopNotification(title, body, bugId) {
   // Fallback to basic Notification API
   const n = new Notification(title, {
     body,
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png',
+    icon: 'garena-logo.png',
     tag:  bugId || 'bugpulse',
   });
   if(bugId) n.onclick = () => { window.focus(); openDetail(bugId); n.close(); };
@@ -2221,7 +2219,7 @@ function initGSI() {
     callback:              handleGoogleCredential,
     auto_select:           false,
     cancel_on_tap_outside: true,
-    hosted_domain:         ALLOWED,
+    // hosted_domain removed — allow any Google account
     use_fedcm_for_prompt:  true,  // opt into FedCM — fixes GSI_LOGGER warning
   });
   _gsiInited = true;
@@ -2281,7 +2279,6 @@ function doRedirectSignIn() {
     + '&response_type=id_token'
     + '&scope=openid%20email%20profile'
     + '&nonce='         + encodeURIComponent(nonce)
-    + '&hd='            + encodeURIComponent(ALLOWED)
     + '&prompt=select_account';
   // Navigate current tab &#8212; checkOAuthFragment() catches the return
   window.location.href = url;
@@ -7262,7 +7259,7 @@ async function saveBuildEntry(editVersion) {
           : '';
         const emailHtml = '<div style="font-family:sans-serif;max-width:520px;margin:0 auto;background:#0d0d20;color:#eeeef8;border-radius:12px;overflow:hidden">'
           + '<div style="background:linear-gradient(135deg,#7c3aed,#06b6d4);padding:20px 24px;display:flex;align-items:center;gap:14px">'
-          + '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png" width="40" height="40" style="border-radius:8px;flex-shrink:0">'
+          + '<img src="garena-logo.png" width="40" height="40" style="border-radius:8px;flex-shrink:0">'
           + '<div>'
           + '<div style="font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:3px">BugPulse · Garena</div>'
           + '<h2 style="margin:0;font-size:20px;letter-spacing:1px;color:#fff">📦 New Build: ' + esc(entry.version) + '</h2>'
@@ -9939,7 +9936,7 @@ function _showTourCard() {
   card.id = 'tourCard';
   card.innerHTML =
     '<div class="tour-natasha-wrap">' +
-      '<img class="tour-natasha-img" src="natasha.png" alt="Natasha" onerror="this.src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png&quot;">' +
+      '<img class="tour-natasha-img" src="natasha.png" alt="Natasha" onerror="this.src=&quot;garena-logo.png&quot;">' +
       '<div class="tour-speech">' +
         '<div class="tour-speech-title">' + step.title + '</div>' +
         '<div class="tour-speech-text">' + step.speech + '</div>' +
