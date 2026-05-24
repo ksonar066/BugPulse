@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="https://cdn.octathorpeweb.com/v1/webstore/hitwicket-logo.png">
+<link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png">
 <title>BugPulse</title>
 <meta name="theme-color" content="#06060f">
-<link rel="preload" href="https://official.garena.com/sg/v1/config/banner_ff.jpg" as="image">
+<link rel="preload" href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png" as="image">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -1000,7 +1000,7 @@ textarea.fi2, input.fi2 { color: var(--text) !important; }
   <div class="load-logo-wrap">
     <div class="load-logo-ring">
       <div class="load-inner">
-        <img src="https://cdn.octathorpeweb.com/v1/webstore/hitwicket-logo.png"
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png"
           style="width:36px;height:36px;object-fit:contain;animation:spin-ring 2s linear infinite reverse"
           onerror="this.outerHTML='&#127951;'">
       </div>
@@ -1018,15 +1018,15 @@ textarea.fi2, input.fi2 { color: var(--text) !important; }
 
 <div id="loginScreen">
   <video class="login-bg-video" autoplay muted loop playsinline>
-    <source src="https://cdn.octathorpeweb.com/v1/webstore/webstore-login.mp4" type="video/mp4">
+    <source src="https://official.garena.com/sg/v1/config/banner_ff.jpg" type="video/mp4">
   </video>
   <div class="login-bg-overlay"></div>
   <div class="lc">
     <div class="lc-logo">
-      <img src="https://cdn.octathorpeweb.com/v1/webstore/hitwicket-logo.png" alt="Hitwicket" onerror="this.style.display='none';this.parentElement.innerHTML='🏏'">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png" alt="Garena" onerror="this.style.display='none';this.parentElement.innerHTML='🎮'">
     </div>
     <div class="lc-title">BugPulse</div>
-    <div class="lc-sub">Hitwicket &#183; Bug Management</div>
+    <div class="lc-sub">Garena &#183; Bug Management</div>
     <!-- Single sign-in button &#8212; rendered by initGoogleSignIn() after config loads -->
     <button class="lc-gbtn" id="gSignInFallbackBtn" style="display:none" onclick="doGoogleSignIn()">
       <svg width="20" height="20" viewBox="0 0 48 48">
@@ -1037,8 +1037,8 @@ textarea.fi2, input.fi2 { color: var(--text) !important; }
       </svg>
       Sign in with Google
     </button>
-    <div class="lc-note">Restricted to <b>@hitwicket.com</b> accounts only</div>
-    <div class="lc-footer">Built by <b>Kunal Jade</b> &#183; QA Engineer &#183; Hitwicket</div>
+    <div class="lc-note">Restricted to <b>@garena.com</b> accounts only</div>
+    <div class="lc-footer">Built by <b>Kunal Jade</b> &#183; QA Engineer &#183; Garena</div>
     <div class="lc-err" id="loginErr"></div>
   </div>
 </div>
@@ -1101,10 +1101,10 @@ textarea.fi2, input.fi2 { color: var(--text) !important; }
 <div id="app" style="display:none">
   <div class="topbar">
     <div class="tb-brand" onclick="goTab('home')" title="Home" onclick="goTab('home')" id="topBrand">
-      <img src="https://cdn.octathorpeweb.com/v1/webstore/hitwicket-logo.png" alt="Hitwicket"
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png" alt="Garena"
         class="tb-logo-full"
         loading="eager"
-        onerror="this.onerror=null;this.src='https://cdn.octathorpeweb.com/v1/webstore/hitwicket-logo.png';this.style.display='none';this.insertAdjacentHTML('afterend','<span class=\'tb-name\'>BugPulse</span>')">
+        onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png';this.style.display='none';this.insertAdjacentHTML('afterend','<span class=\'tb-name\'>BugPulse</span>')">
     </div>
     <div class="tb-tabs">
       <div class="tb-tab on" id="tt-home" data-small-hide onclick="goTab('home')">&#127968; Home</div>
@@ -1528,7 +1528,7 @@ textarea.fi2, input.fi2 { color: var(--text) !important; }
 const WORKER    = 'https://bugpulse-worker.kunal-249.workers.dev';
 // &#9472;&#9472; CHANGED: let so fetchConfig() can override if worker has /config &#9472;&#9472;
 let GOOGLE_ID = '714484298488-ucn9blv0cr5ol2h0v9p6irbrj87murce.apps.googleusercontent.com';
-let ALLOWED   = 'hitwicket.com';
+let ALLOWED   = 'garena.com';
 // &#9472;&#9472; CHANGED: guard flag prevents double-init of GSI &#9472;&#9472;
 let _gsiInited = false;
 // Dynamic origin &#8212; works on any domain/port without code changes
@@ -1546,7 +1546,7 @@ async function fetchConfig() {
     const data = await res.json();
     if (data.google_client_id) {
       GOOGLE_ID = data.google_client_id;
-      ALLOWED   = data.allowed_domain || 'hitwicket.com';
+      ALLOWED   = data.allowed_domain || 'garena.com';
     }
   } catch(e) {
     console.warn('[config] fetchConfig skipped:', e.message);
@@ -1806,7 +1806,7 @@ async function requestPushPermission() {
         await api('/push/notify', 'POST', {
           title: 'BugPulse',
           body: 'Notifications active — you will be alerted on new bugs and builds.',
-          icon: 'https://cdn.octathorpeweb.com/v1/webstore/hitwicket-logo.png',
+          icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png',
           tag: 'test',
         });
       } catch(e) {}
@@ -1893,8 +1893,8 @@ function sendDesktopNotification(title, body, bugId) {
   if (_swRegistration) {
     _swRegistration.showNotification(title, {
       body,
-      icon:  'https://cdn.octathorpeweb.com/v1/webstore/hitwicket-logo.png',
-      badge: 'https://cdn.octathorpeweb.com/v1/webstore/hitwicket-logo.png',
+      icon:  'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png',
+      badge: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png',
       tag:   bugId || 'bugpulse',
       data:  { bugId, url: bugId ? APP_URL + '?bug=' + bugId : APP_URL },
     });
@@ -1903,7 +1903,7 @@ function sendDesktopNotification(title, body, bugId) {
   // Fallback to basic Notification API
   const n = new Notification(title, {
     body,
-    icon: 'https://cdn.octathorpeweb.com/v1/webstore/hitwicket-logo.png',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png',
     tag:  bugId || 'bugpulse',
   });
   if(bugId) n.onclick = () => { window.focus(); openDetail(bugId); n.close(); };
@@ -7262,9 +7262,9 @@ async function saveBuildEntry(editVersion) {
           : '';
         const emailHtml = '<div style="font-family:sans-serif;max-width:520px;margin:0 auto;background:#0d0d20;color:#eeeef8;border-radius:12px;overflow:hidden">'
           + '<div style="background:linear-gradient(135deg,#7c3aed,#06b6d4);padding:20px 24px;display:flex;align-items:center;gap:14px">'
-          + '<img src="https://cdn.octathorpeweb.com/v1/webstore/hitwicket-logo.png" width="40" height="40" style="border-radius:8px;flex-shrink:0">'
+          + '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png" width="40" height="40" style="border-radius:8px;flex-shrink:0">'
           + '<div>'
-          + '<div style="font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:3px">BugPulse · Hitwicket</div>'
+          + '<div style="font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:3px">BugPulse · Garena</div>'
           + '<h2 style="margin:0;font-size:20px;letter-spacing:1px;color:#fff">📦 New Build: ' + esc(entry.version) + '</h2>'
           + platformLine
           + '</div>'
@@ -7275,7 +7275,7 @@ async function saveBuildEntry(editVersion) {
           + assigneeLine
           + downloadSection
           + '<p style="margin-top:16px"><a href="' + esc(buildUrl) + '" style="display:inline-block;background:#7c3aed;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px">View Build Tracker in BugPulse</a></p>'
-          + '<p style="margin-top:20px;font-size:11px;color:#484880">Logged by ' + esc(S.user&&S.user.name||'Team') + ' · BugPulse · Hitwicket</p>'
+          + '<p style="margin-top:20px;font-size:11px;color:#484880">Logged by ' + esc(S.user&&S.user.name||'Team') + ' · BugPulse · Garena</p>'
           + '</div></div>';
         const emailText = 'New build: ' + entry.version
           + (entry.platform ? '\nPlatform: ' + entry.platform : '')
@@ -9008,7 +9008,7 @@ function buildPodGChatFields(cfg) {
       '</div>' +
       '<div class="fg" style="margin-bottom:0">' +
         '<label class="fl" style="text-transform:none;letter-spacing:0;font-size:11px">📧 Email Recipients (comma-separated)</label>' +
-        '<input class="fi2" id="wh-pod-emails-' + safeId + '" value="' + emailVal + '" placeholder="dev@hitwicket.com, qa@hitwicket.com">' +
+        '<input class="fi2" id="wh-pod-emails-' + safeId + '" value="' + emailVal + '" placeholder="dev@garena.com, qa@garena.com">' +
       '</div>' +
     '</div>';
   }).join('');
@@ -9040,7 +9040,7 @@ function buildJenkinsFields(cfg) {
       '<div class="fg" style="margin-bottom:6px"><label class="fl" style="text-transform:none;letter-spacing:0;font-size:11px">💬 GChat URL</label>' +
         '<input class="fi2" id="wh-jk-gchat-' + t + '" value="' + esc(cfg[gchatKey]||'') + '" placeholder="https://chat.googleapis.com/…"></div>' +
       '<div class="fg" style="margin-bottom:0"><label class="fl" style="text-transform:none;letter-spacing:0;font-size:11px">📧 Emails</label>' +
-        '<input class="fi2" id="wh-jk-emails-' + t + '" value="' + esc(cfg[emailKey]||'') + '" placeholder="dev@hitwicket.com"></div>' +
+        '<input class="fi2" id="wh-jk-emails-' + t + '" value="' + esc(cfg[emailKey]||'') + '" placeholder="dev@garena.com"></div>' +
       '</div>';
   }).join('');
 }
@@ -9156,7 +9156,7 @@ async function openWebhookSettings() {
       <div style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-radius:10px;padding:14px 16px">
         <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--g4);margin-bottom:12px">📧 EMAIL RECIPIENTS</div>
         <div class="fg"><label class="fl">Team Emails (comma-separated)</label>
-          <textarea class="fi2" id="wh-emails" rows="2" placeholder="dev@hitwicket.com, qa@hitwicket.com">${esc(cfg.team_emails||'')}</textarea>
+          <textarea class="fi2" id="wh-emails" rows="2" placeholder="dev@garena.com, qa@garena.com">${esc(cfg.team_emails||'')}</textarea>
         </div>
       </div>
       <div style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:14px 16px">
@@ -9939,7 +9939,7 @@ function _showTourCard() {
   card.id = 'tourCard';
   card.innerHTML =
     '<div class="tour-natasha-wrap">' +
-      '<img class="tour-natasha-img" src="natasha.png" alt="Natasha" onerror="this.src=&quot;https://cdn.octathorpeweb.com/v1/webstore/hitwicket-logo.png&quot;">' +
+      '<img class="tour-natasha-img" src="natasha.png" alt="Natasha" onerror="this.src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Garena_logo.png/480px-Garena_logo.png&quot;">' +
       '<div class="tour-speech">' +
         '<div class="tour-speech-title">' + step.title + '</div>' +
         '<div class="tour-speech-text">' + step.speech + '</div>' +
