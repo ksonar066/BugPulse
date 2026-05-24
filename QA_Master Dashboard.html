@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature Tracker Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .header h1 {
+                color: #333;
+                font-size: 28px;
+            }
+
+        .status {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .connected {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .error {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .loading {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+            .stat-card h3 {
+                color: #666;
+                font-size: 12px;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+            }
+
+            .stat-card .number {
+                color: #667eea;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+        .table-wrapper {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .table-header h2 {
+                color: #333;
+                font-size: 18px;
+            }
+
+        .add-btn {
+            background: #48bb78;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f7fafc;
+        }
+
+        th {
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 13px;
+            color: #4a5568;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 13px;
+            color: #2d3748;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .edit-btn, .delete-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .edit-btn {
+            background: #edf2f7;
+            color: #667eea;
+        }
+
+            .edit-btn:hover {
+                background: #667eea;
+                color: white;
+            }
+
+        .delete-btn {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+            .delete-btn:hover {
+                background: #c53030;
+                color: white;
+            }
+
+        .empty-state {
+            background: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .modal.active {
+                display: flex;
+            }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                font-weight: 600;
+                font-size: 13px;
+                color: #4a5568;
+                margin-bottom: 6px;
+                display: block;
+            }
+
+            .form-group input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #cbd5e0;
+                border-radius: 6px;
+            }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .save-btn {
+            background: #667eea;
+            color: white;
+            padding: 10px;
+            flex: 1;
+            border: none;
+            border-radius: 6px;
+        }
+
+        .cancel-btn {
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 10px;
+            flex: 1;
+            border: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>📊 Feature Tracker Dashboard</h1>
+            <div id="status" class="status">Connecting…</div>
+        </div>
+
+        <div class="dashboard" id="dashboard">
+            <div class="stats" id="stats"></div>
+
+            <div class="table-wrapper">
+                <div class="table-header">
+                    <h2>Features & Issues</h2>
+                    <button class="add-btn" onclick="openAddModal()">+ Add New</button>
+                </div>
+                <div id="tableContainer"></div>
+            </div>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+            <h3>Connecting to Google Sheet…</h3>
+            <p>Please wait while data loads.</p>
+        </div>
+
+    </div>
+
+
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Add New Record</h2>
+            <form id="modalForm" onsubmit="handleSave(event)">
+                <div id="formFields"></div>
+                <div class="modal-buttons">
+                    <button class="save-btn" type="submit" id="submitBtn">Save</button>
+                    <button class="cancel-btn" type="button" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        let data = [];
+        let columns = [];
+        let editingIndex = null;
+
+        // ⭐ HARD-CODED APPS SCRIPT URL
+        let scriptUrl = "https://script.google.com/macros/s/AKfycbxCb1PHAAxeqZUJ15_QLywJGwdEMXbz1QgNMVoGEJUvYu0zjwSpU31jTLsyBJiybhcuTA/exec";
+
+        function updateStatus(message, type = 'loading') {
+            let status = document.getElementById("status");
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+
+        // ⭐ Auto load on page open
+        window.onload = function () {
+            updateStatus("Connecting…", "loading");
+            fetchData();
+        };
+
+
+        function fetchData() {
+            fetch(`${scriptUrl}?action=getData`)
+                .then(res => res.text())
+                .then(text => {
+                    const result = JSON.parse(text);
+
+                    if (result.success && result.data.length > 0) {
+                        data = result.data;
+                        columns = Object.keys(data[0]);
+
+                        updateStatus("Connected ✓", "connected");
+                        renderDashboard();
+                    } else {
+                        updateStatus("Connected (No Data)", "connected");
+                        data = [];
+                        renderEmpty();
+                    }
+                })
+                .catch(err => {
+                    updateStatus("Connection Error", "error");
+                    console.error(err);
+                });
+        }
+
+
+        function renderDashboard() {
+            document.getElementById("emptyState").style.display = "none";
+            document.getElementById("dashboard").style.display = "block";
+
+            renderStats();
+            renderTable();
+        }
+
+        function renderEmpty() {
+            document.getElementById("dashboard").style.display = "none";
+            document.getElementById("emptyState").style.display = "block";
+        }
+
+        function renderStats() {
+            document.getElementById("stats").innerHTML = `
+                <div class="stat-card"><h3>Total Records</h3><div class="number">${data.length}</div></div>
+                <div class="stat-card"><h3>Columns</h3><div class="number">${columns.length}</div></div>
+                <div class="stat-card"><h3>Last Updated</h3><div class="number">${new Date().toLocaleTimeString()}</div></div>
+            `;
+        }
+
+
+        function renderTable() {
+            let html = `<table><thead><tr>`;
+
+            const displayCols = columns.slice(0, 8);
+
+            displayCols.forEach(col => html += `<th>${col}</th>`);
+            html += `<th>Actions</th></tr></thead><tbody>`;
+
+            data.forEach((row, idx) => {
+                html += `<tr>`;
+                displayCols.forEach(col => html += `<td>${row[col] || ""}</td>`);
+                html += `
+                    <td>
+                        <div class="action-buttons">
+                            <button class="edit-btn" onclick="openEditModal(${idx})">Edit</button>
+                            <button class="delete-btn" onclick="deleteRow(${idx})">Delete</button>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+
+            html += `</tbody></table>`;
+            document.getElementById("tableContainer").innerHTML = html;
+        }
+
+
+        function openAddModal() {
+            editingIndex = null;
+            document.getElementById("modalTitle").textContent = "Add New Record";
+            renderForm();
+            document.getElementById("modal").classList.add("active");
+        }
+
+        function openEditModal(idx) {
+            editingIndex = idx;
+            document.getElementById("modalTitle").textContent = "Edit Record";
+            renderForm(data[idx]);
+            document.getElementById("modal").classList.add("active");
+        }
+
+        function renderForm(row = {}) {
+            let html = "";
+            columns.forEach(col => {
+                html += `
+                    <div class="form-group">
+                        <label>${col}</label>
+                        <input type="text" name="${col}" value="${row[col] || ""}" required>
+                    </div>
+                `;
+            });
+            document.getElementById("formFields").innerHTML = html;
+        }
+
+
+        function handleSave(e) {
+            e.preventDefault();
+            const formData = new FormData(document.getElementById("modalForm"));
+            const rowData = Object.fromEntries(formData);
+
+            let url = editingIndex === null
+                ? `${scriptUrl}?action=addRow&data=${encodeURIComponent(JSON.stringify(rowData))}`
+                : `${scriptUrl}?action=updateRow&index=${editingIndex}&data=${encodeURIComponent(JSON.stringify(rowData))}`;
+
+            fetch(url)
+                .then(res => res.text())
+                .then(text => {
+                    const result = JSON.parse(text);
+                    if (result.success) fetchData();
+                    closeModal();
+                });
+        }
+
+
+        function deleteRow(idx) {
+            if (!confirm("Delete this record?")) return;
+
+            fetch(`${scriptUrl}?action=deleteRow&index=${idx}`)
+                .then(res => res.text())
+                .then(text => {
+                    const result = JSON.parse(text);
+                    if (result.success) fetchData();
+                });
+        }
+
+        function closeModal() {
+            document.getElementById("modal").classList.remove("active");
+        }
+
+    </script>
+
+</body>
+</html>

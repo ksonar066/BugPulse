@@ -1,0 +1,15 @@
+name = "bugpulse-worker"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "bugpulse-db"
+database_id = "5dcb154d-6c6d-461d-852c-700d7e5ce9ac"
+
+[triggers]
+crons = ["* * * * 1-5"]  # ✅ Runs 720x per week (Mon-Fri only)
+
+[vars]
+APP_URL = "https://hitwicket-bugpulse.vercel.app"
+TIMEZONE = "Asia/Kolkata"

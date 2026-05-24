@@ -1,0 +1,20 @@
+.bug {
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Priority levels */
+.high {
+    background-color: #e74c3c; /* Red */
+}
+
+.medium {
+    background-color: #f39c12; /* Orange */
+}
+
+.low {
+    background-color: #27ae60; /* Green */
+}
